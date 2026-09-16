@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TAE-1 • Predict Team Wins (W) using Machine Learning</title>
+  <link rel="stylesheet" href="static/css/style.css" />
+</head>
+<body>
+
+  <!-- TOP HEADER / STUDENT CREDENTIALS BAR -->
+  <header class="top-bar">
+    <div class="container header-flex">
+      <div class="project-tag">
+        <span class="badge">TAE-1 • Machine Learning Project</span>
+      </div>
+      <div class="student-info">
+        <span><strong>Student:</strong> Yashwant Sirsate</span>
+        <span class="sep">•</span>
+        <span><strong>Roll No:</strong> CM24060</span>
+        <span class="sep">•</span>
+        <span><strong>Dept:</strong> CSE (AI &amp; ML)</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- SECTION 1: HERO -->
+    <section class="hero-section">
+      <h1 class="hero-title">Predict the Number of Wins</h1>
+      <p class="hero-subtitle">Estimate a team's expected wins (W) using a trained Machine Learning regression model.</p>
+      <div class="hero-actions">
+        <a href="#prediction-section" class="btn btn-primary">Start Prediction ↓</a>
+      </div>
+    </section>
+
+    <!-- SECTION 2: AIM -->
+    <section class="card aim-card">
+      <div class="card-header-pill">PROJECT AIM</div>
+      <p class="aim-text">
+        This system uses team performance data to predict the number of wins <strong>(W)</strong> using a trained Machine Learning model.
+      </p>
+    </section>
+
+    <!-- MAIN WORKSPACE: FORM & RESULT -->
+    <section id="prediction-section" class="grid-layout">
+
+      <!-- SECTION 3: PREDICTION INPUT FORM -->
+      <div class="card form-card">
+        <div class="card-title-group">
+          <h2 class="card-heading">Enter Team Details</h2>
+          <p class="card-subheading">Provide season performance metrics to execute prediction.</p>
+        </div>
+
+        <!-- Notification Banner -->
+        <div id="status-box" class="status-box hidden"></div>
+
+        <form id="prediction-form" novalidate>
+          <div class="form-group">
+            <label for="runs_scored">Runs Scored (R)</label>
+            <input type="number" id="runs_scored" name="runs_scored" placeholder="e.g., 780" step="1" required />
+            <small class="field-hint">Total offensive runs scored by the team (Typical: 600 - 900)</small>
+          </div>
+
+          <div class="form-group">
+            <label for="runs_allowed">Runs Allowed (RA)</label>
+            <input type="number" id="runs_allowed" name="runs_allowed" placeholder="e.g., 650" step="1" required />
+            <small class="field-hint">Total runs conceded by team pitching/defense (Typical: 600 - 900)</small>
+          </div>
+
+          <div class="form-group">
+            <label for="era">Earned Run Average (ERA)</label>
+            <input type="number" id="era" name="era" placeholder="e.g., 3.65" step="0.01" required />
+            <small class="field-hint">Pitching efficiency metric (Lower is better, Typical: 3.00 - 5.20)</small>
+          </div>
+
+          <div class="form-group">
+            <label for="batting_avg">Team Batting Average (BA)</label>
+            <input type="number" id="batting_avg" name="batting_avg" placeholder="e.g., 0.265" step="0.001" required />
+            <small class="field-hint">Ratio of base hits per at-bats (Typical: 0.230 - 0.285)</small>
+          </div>
+
+          <div class="form-group">
+            <label for="saves">Saves (SV)</label>
+            <input type="number" id="saves" name="saves" placeholder="e.g., 48" step="1" required />
+            <small class="field-hint">Games closed and protected successfully by relievers (Typical: 30 - 55)</small>
+          </div>
+
+          <!-- BUTTON GROUP -->
+          <div class="button-row">
+            <button type="submit" id="predict-btn" class="btn btn-predict">
+              PREDICT WINS
+            </button>
+            <button type="button" id="sample-data-btn" class="btn btn-secondary">
+              Try Sample Data
+            </button>
+            <button type="button" id="reset-btn" class="btn btn-text">
+              Clear
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- SECTION 4: RESULT CARD -->
+      <div class="card result-card">
+        <div class="card-header-pill">PREDICTION RESULT</div>
+
+        <div id="result-placeholder" class="result-placeholder">
+          <div class="icon-circle">🎯</div>
+          <h3>Awaiting Input</h3>
+          <p>Fill in team metrics on the left or click <strong>"Try Sample Data"</strong>, then press <strong>PREDICT WINS</strong>.</p>
+        </div>
+
+        <div id="result-display" class="result-display hidden">
+          <span class="result-label">PREDICTED NUMBER OF WINS</span>
+          <div class="result-number" id="win-count">--</div>
+          <span class="result-scale">out of 162 regular season games</span>
+
+          <div class="result-status-badge" id="win-analysis">
+            Playoff Caliber Team
+          </div>
+
+          <p class="result-model-text">
+            ✓ Estimated using the trained Machine Learning model.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: HOW IT WORKS -->
+    <section class="card how-it-works-card">
+      <h2 class="card-heading center">How It Works</h2>
+      <p class="card-subheading center">The 4-step Machine Learning pipeline behind this live prediction:</p>
+
+      <div class="pipeline-grid">
+        <div class="step-card">
+          <div class="step-number">1</div>
+          <div class="step-title">Enter Data</div>
+          <p class="step-desc">Faculty or user inputs core team performance indicators.</p>
+        </div>
+
+        <div class="step-arrow">➔</div>
+
+        <div class="step-card">
+          <div class="step-number">2</div>
+          <div class="step-title">Process Data</div>
+          <p class="step-desc">Normalizes inputs using trained standard Z-score parameters.</p>
+        </div>
+
+        <div class="step-arrow">➔</div>
+
+        <div class="step-card">
+          <div class="step-number">3</div>
+          <div class="step-title">ML Predicts</div>
+          <p class="step-desc">Trained Ridge Regression computes the expected win total.</p>
+        </div>
+
+        <div class="step-arrow">➔</div>
+
+        <div class="step-card">
+          <div class="step-number">4</div>
+          <div class="step-title">Show Result</div>
+          <p class="step-desc">Predicted number of wins (W) is displayed immediately.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 6: MODEL INFORMATION -->
+    <section class="card model-info-card">
+      <h2 class="card-heading">Model Information</h2>
+      <div class="info-grid">
+        <div class="info-item">
+          <span class="info-label">Model:</span>
+          <span class="info-value">Ridge Linear Regression</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Input Features:</span>
+          <span class="info-value">Runs (R), Allowed (RA), ERA, Batting Avg (BA), Saves (SV)</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Target:</span>
+          <span class="info-value highlight">Wins (W)</span>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <p>TAE-1 Machine Learning Presentation • Yashwant Sirsate (Roll No: CM24060) • Dept. of CSE (AI &amp; ML)</p>
+  </footer>
+
+  <script src="static/js/main.js"></script>
+</body>
+</html>
